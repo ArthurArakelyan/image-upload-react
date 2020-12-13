@@ -2,30 +2,78 @@ import React from 'react';
 import Header from '../Header';
 import UploadImageButton from './UploadImageButton';
 import UploadedImage from './UploadedImage';
-import {nanoid} from 'nanoid';
+import Modal from '../components/common/Modal';
+import { nanoid } from 'nanoid';
 
 import styles from './styles.module.css';
 
 class UploadImage extends React.Component {
   state = {
+    modalIsOpen: false,
+    creatingImage: {},
     images: []
   }
 
-  handleUpload = (e) => {
+  handleModalOpen = () => {
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        creatingImage: {
+          id: nanoid(),
+          src: '',
+          name: ''
+        },
+        modalIsOpen: true
+      }
+    });
+  }
+
+  handleModalClose = () => {
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        modalIsOpen: false,
+        creatingImage: {}
+      }
+    });
+  }
+
+  handleModalSubmit = () => {
+    this.setState(prevState => {
+      if(prevState.creatingImage.src && prevState.creatingImage.name) {
+        return {
+          ...prevState,
+          images: [...prevState.images, this.state.creatingImage],
+          creatingImage: {},
+          modalIsOpen: false
+        }
+      }
+    });
+  }
+
+  handleModalChange = (e) => {
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        creatingImage: {
+          ...prevState.creatingImage,
+          name: e.target.value
+        }
+      }
+    });
+  }
+
+  handleModalUploadImage = (e) => {
     if (e.target.files && e.target.files[0]) {
-      const name = e.target.files[0].name;
       const reader = new FileReader();
       reader.onload = (e) => {
-        const result = e.target.result;
-
         this.setState(prevState => {
           return {
             ...prevState,
-            images: [...prevState.images, {
-              id: nanoid(),
-              src: result,
-              name
-            }]
+            creatingImage: {
+              ...prevState.creatingImage,
+              src: e.target.result
+            }
           }
         });
       };
@@ -46,27 +94,37 @@ class UploadImage extends React.Component {
 
   render() {
     return (
-      <div className={styles.upload__image}>
-        <Header>
-          <UploadImageButton
-            handleUpload={this.handleUpload}
-          />
-        </Header>
-        <div className={styles.uploaded__images}>
-          {this.state.images.map(image => {
-            return (
-              <UploadedImage
-                key={image.id}
-                id={image.id}
-                src={image.src}
-                alt={image.id}
-                name={image.name}
-                handleDelete={this.handleDelete}
-              />
-            );
-          })}
+      <>
+        <div className={styles.upload__image}>
+          <Header>
+            <UploadImageButton
+              handleModalOpen={this.handleModalOpen}
+            />
+          </Header>
+          <div className={styles.uploaded__images}>
+            {this.state.images.map(image => {
+              return (
+                <UploadedImage
+                  key={image.id}
+                  id={image.id}
+                  src={image.src}
+                  name={image.name}
+                  handleDelete={this.handleDelete}
+                />
+              );
+            })}
+          </div>
         </div>
-      </div>
+        {this.state.modalIsOpen && <Modal
+          modalIsOpen={this.state.modalIsOpen}
+          handleModalClose={this.handleModalClose}
+          handleModalSubmit={this.handleModalSubmit}
+          handleModalChange={this.handleModalChange}
+          handleModalUploadImage={this.handleModalUploadImage}
+          modalImage={this.state.creatingImage.src}
+          modalImageId={this.state.creatingImage.id}
+        />}
+      </>
     );
   }
 }

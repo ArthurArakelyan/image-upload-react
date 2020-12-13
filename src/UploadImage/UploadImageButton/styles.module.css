@@ -4,14 +4,14 @@
   background-color: rgba(255, 255, 255, 0.938); 
   cursor: pointer;
   font-weight: bolder;
-  padding: 15px 27px;
+  padding: 15px 30px;
   border-radius: 50%;
-  transition: background-color .4s ease-in-out, box-shadow .4s ease-in-out;
+  outline: none;
+  border: none;
+  transition: background-color .4s ease-in-out, box-shadow .4s ease-in-out, text-shadow .4s ease-in-out;
 }
 .upload__image_button:hover {
   background-color: rgba(255, 255, 255, 0.815);
   box-shadow: 0 0 5px white;
-}
-.upload__image_input {
-  display: none;
+  text-shadow: 0 0 3px black;
 }
