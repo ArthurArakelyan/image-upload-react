@@ -49,6 +49,7 @@ class Modal extends React.Component {
               onChange={this.props.handleModalChange}
               onInput={this.isValidInput}
               style={{ borderColor: this.state.validInput ? 'black' : 'red' }}
+              autoFocus={true}
               type="text"
               name="name"
               placeholder="Name..."
