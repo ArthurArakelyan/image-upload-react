@@ -40,7 +40,7 @@ class UploadImage extends React.Component {
 
   handleModalSubmit = () => {
     this.setState(prevState => {
-      if(prevState.creatingImage.src && prevState.creatingImage.name) {
+      if (prevState.creatingImage.src && prevState.creatingImage.name) {
         return {
           ...prevState,
           images: [...prevState.images, this.state.creatingImage],
@@ -64,7 +64,7 @@ class UploadImage extends React.Component {
   }
 
   handleModalUploadImage = (e) => {
-    if (e.target.files && e.target.files[0]) {
+    if (e.target.files && e.target.files[0] && e.target.files[0].size <= 10000000) {
       const reader = new FileReader();
       reader.onload = (e) => {
         this.setState(prevState => {
@@ -78,6 +78,8 @@ class UploadImage extends React.Component {
         });
       };
       reader.readAsDataURL(e.target.files[0]);
+    } else {
+      alert('No more 10MB');
     }
   }
 
