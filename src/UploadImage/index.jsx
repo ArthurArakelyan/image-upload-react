@@ -99,31 +99,33 @@ class UploadImage extends React.Component {
   render() {
     return (
       <>
-        <div className={styles.upload__image}>
-          <Header>
-            <UploadImageButton
-              handleModalOpen={this.handleModalOpen}
-            />
-          </Header>
-          <div className={styles.uploaded__images}>
-            {this.state.images.map(image => {
-              return (
-                <UploadedImage
-                  key={image.id}
-                  id={image.id}
-                  src={image.src}
-                  name={image.name}
-                  handleDelete={this.handleDelete}
+        <Switch>
+          <div className={styles.upload__image}>
+            <Route exact path='/'>
+              <Header>
+                <UploadImageButton
+                  handleModalOpen={this.handleModalOpen}
                 />
-              );
-            })}
-          </div>
-          <Switch>
+              </Header>
+              <div className={styles.uploaded__images}>
+                {this.state.images.map(image => {
+                  return (
+                    <UploadedImage
+                      key={image.id}
+                      id={image.id}
+                      src={image.src}
+                      name={image.name}
+                      handleDelete={this.handleDelete}
+                    />
+                  );
+                })}
+              </div>
+            </Route>
             {this.state.images.map(image => {
               return (
                 <Route key={image.id} path={`/${image.id}`}>
                   <Link to='/'>
-                    <UploadedImageZoom 
+                    <UploadedImageZoom
                       src={image.src}
                       id={image.id}
                     />
@@ -131,8 +133,8 @@ class UploadImage extends React.Component {
                 </Route>
               );
             })}
-          </Switch>
-        </div>
+          </div>
+        </Switch>
         {<Modal
           modalIsOpen={this.state.modalIsOpen}
           handleModalClose={this.handleModalClose}
