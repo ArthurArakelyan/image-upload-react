@@ -15,3 +15,27 @@ body {
 *, *::before, *::after {
     box-sizing: border-box;
 }
+.ReactModal__Content {
+  opacity: 0;
+  transform: translateY(-180px);
+  transition: all .5s ease-in-out;
+}
+.ReactModal__Content--after-open {
+  opacity: 1;
+  transform: translateY(0px);
+}
+.ReactModal__Content--before-close {
+  opacity: 0;
+  transform: translateY(-180px);
+}
+
+.ReactModal__Overlay {
+  background-color: rgba(0, 0, 0, 0) !important;
+  transition: background-color .5s ease-in-out;
+}
+.ReactModal__Overlay--after-open {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+}
+.ReactModal__Overlay--before-close {
+  background-color: rgba(0, 0, 0, 0) !important;
+}

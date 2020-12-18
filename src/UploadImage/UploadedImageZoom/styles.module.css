@@ -1,0 +1,18 @@
+.big__image_container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+.big__image {
+  min-width: 91%;
+  max-width: 96%;
+  min-height: 75vh;
+  max-height: 95vh;
+  display: block;
+}

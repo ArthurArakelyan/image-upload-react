@@ -9,7 +9,7 @@ class UploadedImage extends React.Component {
       <div className={styles.image}>
         <button className={styles.image__delete} onClick={() => this.props.handleDelete(this.props.id)}>X</button>
         <p className={styles.image__name}>{this.props.name}</p>
-        <Link to={`/images/${this.props.id}`}>
+        <Link to={`/${this.props.id}`}>
           <img
             src={this.props.src}
             alt={this.props.id}

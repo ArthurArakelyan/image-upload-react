@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../Header';
 import UploadImageButton from './UploadImageButton';
 import UploadedImage from './UploadedImage';
+import UploadedImageZoom from './UploadedImageZoom';
 import Modal from '../components/common/Modal';
 import { nanoid } from 'nanoid';
 import { Switch, Route, Link } from 'react-router-dom';
@@ -120,18 +121,19 @@ class UploadImage extends React.Component {
           <Switch>
             {this.state.images.map(image => {
               return (
-                <Route path={`/images/${image.id}`}>
+                <Route key={image.id} path={`/${image.id}`}>
                   <Link to='/'>
-                    <div className={styles.big__image_container}>
-                      <img className={styles.big__image} src={image.src} alt={image.id} />
-                    </div>
+                    <UploadedImageZoom 
+                      src={image.src}
+                      id={image.id}
+                    />
                   </Link>
                 </Route>
               );
             })}
           </Switch>
         </div>
-        {this.state.modalIsOpen && <Modal
+        {<Modal
           modalIsOpen={this.state.modalIsOpen}
           handleModalClose={this.handleModalClose}
           handleModalSubmit={this.handleModalSubmit}

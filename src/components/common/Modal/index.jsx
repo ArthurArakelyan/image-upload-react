@@ -23,12 +23,12 @@ class Modal extends React.Component {
   render() {
     return (
       <ReactModal
+        closeTimeoutMS={500}
         isOpen={this.props.modalIsOpen}
         shouldCloseOnOverlayClick={true}
         onRequestClose={this.props.handleModalClose}
         style={
           {
-            overlay: { backgroundColor: 'rgba(0, 0, 0, 0.4)' },
             content: { color: 'black', width: '500px', height: 'fit-content', margin: '170px auto', padding: '0' }
           }
         }
