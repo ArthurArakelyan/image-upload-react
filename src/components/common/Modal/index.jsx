@@ -48,26 +48,36 @@ class Modal extends React.Component {
               className={styles.modal__form_name}
               onChange={this.props.handleModalChange}
               onInput={this.isValidInput}
-              style={{ borderColor: this.state.validInput ? 'black' : 'red' }}
+              style={{ borderColor: this.state.validInput ? '#007BFF' : 'red' }}
               autoFocus={true}
               type="text"
               name="name"
               placeholder="Name..."
             />
-            <label
-              className={styles.modal__form_image_label}
-              style={{ display: this.props.modalImage ? 'none' : 'block' }}
-              onChange={this.props.handleModalUploadImage}>
-              <input className={styles.modal__form_image_input} type="file" />
-              Upload Image
-            </label>
+            {!this.props.modalImage &&
+              <label
+                className={styles.modal__form_image_label}
+                onChange={this.props.handleModalUploadImage}>
+                <input className={styles.modal__form_image_input} type="file" />
+                Upload Image
+              </label>
+            }
           </form>
-          <img
-            src={this.props.modalImage}
-            alt={this.props.modalImageId}
-            className={styles.modal__img}
-            style={{ display: this.props.modalImage ? 'block' : 'none' }}
-          />
+          {this.props.modalImage &&
+            <div className={styles.modal__img_container}>
+              <img
+                src={this.props.modalImage}
+                alt={this.props.modalImageId}
+                className={`${styles.modal__img} ${this.props.imgShow ? styles.modal__img_opened : null}`}
+              />
+              <label
+                className={`${styles.modal__img_change} ${this.props.imgShow ? styles.modal__img_change_opened : null}`}
+                onChange={this.props.handleModalUploadImage}>
+                <input className={styles.modal__form_image_input} type="file" />
+                Change
+              </label>
+            </div>
+          }
         </div>
         <div className={styles.modal__footer}>
           <button

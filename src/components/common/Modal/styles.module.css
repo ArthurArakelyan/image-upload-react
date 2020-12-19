@@ -34,9 +34,9 @@
 .modal__form_name {
   width: 100%;
   outline: none;
-  border: 1px solid black;
+  border: 1px solid #007BFF;
   border-radius: 3px;
-  transition: border-color .4s ease-in-out;
+  transition: border-color .4s ease-in-out, box-shadow .4s ease-in-out;
 }
 .modal__form_image_label {
   border: black 1px solid;
@@ -50,10 +50,40 @@
 .modal__form_image_input {
   display: none;
 }
+.modal__img_container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-top: 10px;
+}
 .modal__img {
+  height: 0;
   width: 50%;
   max-height: 200px;
-  margin-top: 10px;
+  transition: height .4s ease-in-out;
+}
+.modal__img_opened {
+  height: 200px;
+}
+.modal__img_change {
+  position: absolute;
+  cursor: pointer;
+  color: white;
+  opacity: 0;
+  z-index: 10;
+  padding: 5px;
+  font-size: 14px;
+  background-color: rgba(0, 123, 255, 0.55);
+  border-radius: 0 0 5px 0;
+  transition: background-color .4s ease-in-out, opacity .4s ease-in-out;
+}
+.modal__img_change:hover {
+  background-color: rgba(0, 123, 255, 0.9);
+}
+.modal__img_change_opened {
+  opacity: 1;
 }
 
 .modal__footer {

@@ -5,13 +5,14 @@ import UploadedImage from './UploadedImage';
 import UploadedImageZoom from './UploadedImageZoom';
 import Modal from '../components/common/Modal';
 import { nanoid } from 'nanoid';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 import styles from './styles.module.css';
 
 class UploadImage extends React.Component {
   state = {
     modalIsOpen: false,
+    imgShow: false,
     creatingImage: {},
     images: []
   }
@@ -25,7 +26,8 @@ class UploadImage extends React.Component {
           src: '',
           name: ''
         },
-        modalIsOpen: true
+        modalIsOpen: true,
+        imgShow: false
       }
     });
   }
@@ -35,7 +37,7 @@ class UploadImage extends React.Component {
       return {
         ...prevState,
         modalIsOpen: false,
-        creatingImage: {}
+        imgShow: false
       }
     });
   }
@@ -46,8 +48,8 @@ class UploadImage extends React.Component {
         return {
           ...prevState,
           images: [...prevState.images, this.state.creatingImage],
-          creatingImage: {},
-          modalIsOpen: false
+          modalIsOpen: false,
+          imgShow: false
         }
       }
     });
@@ -65,10 +67,22 @@ class UploadImage extends React.Component {
     });
   }
 
+  handleModalImageShow = () => {
+    setTimeout(() => {
+      this.setState(prevState => {
+        return {
+          ...prevState,
+          imgShow: true
+        }
+      });
+    }, 60);
+  }
+
   handleModalUploadImage = (e) => {
     if (e.target.files && e.target.files[0] && e.target.files[0].size <= 10000000) {
       const reader = new FileReader();
       reader.onload = (e) => {
+        this.handleModalImageShow();
         this.setState(prevState => {
           return {
             ...prevState,
@@ -122,15 +136,17 @@ class UploadImage extends React.Component {
               </div>
             </Route>
             {this.state.images.map(image => {
+              const { id } = image;
+
               return (
-                <Route key={image.id} path={`/${image.id}`}>
-                  <Link to='/'>
-                    <UploadedImageZoom
-                      src={image.src}
-                      id={image.id}
-                    />
-                  </Link>
-                </Route>
+                <Route
+                  key={id}
+                  path={`/${id}`}
+                  render={() => <UploadedImageZoom
+                    src={image.src}
+                    id={id}
+                  />}
+                />
               );
             })}
           </div>
@@ -141,6 +157,7 @@ class UploadImage extends React.Component {
           handleModalSubmit={this.handleModalSubmit}
           handleModalChange={this.handleModalChange}
           handleModalUploadImage={this.handleModalUploadImage}
+          imgShow={this.state.imgShow}
           modalImage={this.state.creatingImage.src}
           modalImageId={this.state.creatingImage.id}
         />}
